@@ -39,6 +39,8 @@ dependencies {
     implementation platform('com.google.firebase:firebase-bom:28.4.0')
     /* Autenticacion con firebase */
     implementation 'com.google.firebase:firebase-auth-ktx'
+    /* Base de datos de firebase, firestore android implementation */
+    implementation 'com.google.firebase:firebase-firestore'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.0'
     implementation 'com.google.android.material:material:1.4.0'
     testImplementation 'junit:junit:4.+'

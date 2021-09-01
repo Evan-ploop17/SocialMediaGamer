@@ -13,8 +13,11 @@ import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.ktx.Firebase;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -23,6 +26,7 @@ public class RegisterActivity extends AppCompatActivity {
     TextInputEditText textInputUserName, textInputUserMail, textInputUserPassword, textInputUserConfirmPassword;
     Button btnRegister;
     FirebaseAuth auth;
+    FirebaseFirestore fireStore;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,8 +45,9 @@ public class RegisterActivity extends AppCompatActivity {
             }
         });
 
-        // Así instanciamos el objeto
+        // Así instanciamos los objetos
         auth = FirebaseAuth.getInstance();
+        fireStore = FirebaseFirestore.getInstance();
     }
 
     private void register(){
@@ -56,7 +61,7 @@ public class RegisterActivity extends AppCompatActivity {
             if(isEmailValid(mail)){
                 if(pass.equals(confirmPassword)){
                     if(pass.length() > 6){
-                        createUser(mail, pass);
+                        createUser(userName, mail, pass);
                     }
                     else{
                         Toast.makeText(this, "Password need 6 characters", Toast.LENGTH_LONG).show();
@@ -71,12 +76,24 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     // Método para crear el usuario
-    private void createUser(String mail, String password){
+    private void createUser(final String userName, final String mail, String password){
         auth.createUserWithEmailAndPassword(mail, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if(task.isSuccessful()){
-                    Toast.makeText(RegisterActivity.this, "User created succeful", Toast.LENGTH_LONG).show();
+
+                    Map<String, Object> map = new HashMap<>();
+                    map.put("mail", mail);
+                    map.put("name", userName);
+                    String userId = auth.getCurrentUser().getUid();
+                    fireStore.collection("Users").document(userId).set(map).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if(task.isSuccessful()){
+                                Toast.makeText(RegisterActivity.this, "User saved in database", Toast.LENGTH_LONG).show();
+                            }
+                        }
+                    });
                 }else{
                     Toast.makeText(RegisterActivity.this, "Try again", Toast.LENGTH_LONG).show();
                 }
