@@ -9,5 +9,6 @@
     <string name="user">User</string>
     <string name="register">Register</string>
     <string name="home">Home</string>
-
+    <string name="complete_info">Complete your info profile</string>
+    <string name="confirm">Confirm</string>
 </resources>
