@@ -14,7 +14,6 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.ktx.Firebase;
 
 import java.util.HashMap;
 import java.util.Map;

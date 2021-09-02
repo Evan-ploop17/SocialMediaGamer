@@ -9,6 +9,7 @@
         <entry key="app/src/main/res/drawable/ic_mail.xml" value="0.24444444444444444" />
         <entry key="app/src/main/res/drawable/ic_password_grey.xml" value="0.21666666666666667" />
         <entry key="app/src/main/res/drawable/rounded_button.xml" value="0.20462962962962963" />
+        <entry key="app/src/main/res/layout/activity_home.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.27105666156202146" />
         <entry key="app/src/main/res/layout/activity_register.xml" value="0.25" />
       </map>
