@@ -11,6 +11,10 @@ public class AuthProvider {
 
     FirebaseAuth mAuth;
 
+    public Task<AuthResult> register(String mail, String password){
+        return mAuth.createUserWithEmailAndPassword(mail, password);
+    }
+
     public AuthProvider(){
         mAuth = FirebaseAuth.getInstance();
     }

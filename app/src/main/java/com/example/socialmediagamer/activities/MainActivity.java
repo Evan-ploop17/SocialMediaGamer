@@ -3,6 +3,7 @@ package com.example.socialmediagamer.activities;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -34,6 +35,8 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import java.util.HashMap;
 import java.util.Map;
 
+import dmax.dialog.SpotsDialog;
+
 public class MainActivity extends AppCompatActivity {
 
     TextView mTextViewRegister;
@@ -44,6 +47,7 @@ public class MainActivity extends AppCompatActivity {
     private final int REQUEST_CODE_GOOGLE = 9001;
     SignInButton btnLoginGoogle;
     UserProvider mUsersProvider;
+    AlertDialog mDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,6 +70,7 @@ public class MainActivity extends AppCompatActivity {
         mAuthProvider = new AuthProvider();
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
         mUsersProvider = new UserProvider();
+        mDialog = new SpotsDialog.Builder().setContext(this).setMessage(R.string.wait).build();
 
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -117,7 +122,7 @@ public class MainActivity extends AppCompatActivity {
     }
     // Desde acá si ejecuta la autenticación
     private void firebaseAuthWithGoogle(String idToken) {
-
+        mDialog.show();
         mAuthProvider.googleLogin(idToken)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
@@ -129,6 +134,7 @@ public class MainActivity extends AppCompatActivity {
                             Log.d("ERROR", "signInWithCredential:success");
                         }
                         else {
+                            mDialog.dismiss();
                             // If sign in fails, display a message to the user.
                             Log.w("ERROR", "signInWithCredential:failure", task.getException());
                         }
@@ -142,6 +148,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
                 if(documentSnapshot.exists()){
+                    mDialog.dismiss();
                     Intent intent = new Intent(MainActivity.this, HomeActivity.class);
                     startActivity(intent);
                 }
@@ -154,6 +161,7 @@ public class MainActivity extends AppCompatActivity {
                     mUsersProvider.create(user).addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
+                            mDialog.dismiss();
                             if(task.isSuccessful()){
                                 Intent intent = new Intent(MainActivity.this, CompleteProfileActivity.class);
                                 startActivity(intent);
@@ -172,10 +180,11 @@ public class MainActivity extends AppCompatActivity {
     private void login(){
         String mail = mTextinputEmail.getText().toString();
         String pass = mTextinputPassword.getText().toString();
-
+        mDialog.show();
         mAuthProvider.login(mail, pass).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
+                mDialog.dismiss();
                 if(task.isSuccessful()){
                     Intent intent = new Intent(MainActivity.this, HomeActivity.class);
                     startActivity(intent);

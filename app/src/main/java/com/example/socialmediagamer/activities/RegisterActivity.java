@@ -3,30 +3,36 @@ package com.example.socialmediagamer.activities;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
 import com.example.socialmediagamer.R;
+import com.example.socialmediagamer.models.User;
+import com.example.socialmediagamer.providers.AuthProvider;
+import com.example.socialmediagamer.providers.UserProvider;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.AuthResult;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import dmax.dialog.SpotsDialog;
+
 public class RegisterActivity extends AppCompatActivity {
 
     TextInputEditText textInputUserName, textInputUserMail, textInputUserPassword, textInputUserConfirmPassword;
     Button btnRegister;
-    FirebaseAuth auth;
-    FirebaseFirestore fireStore;
+    AuthProvider mAuthProvider;
+    UserProvider mUsersProvider;
+    AlertDialog mDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,8 +52,10 @@ public class RegisterActivity extends AppCompatActivity {
         });
 
         // Así instanciamos los objetos
-        auth = FirebaseAuth.getInstance();
-        fireStore = FirebaseFirestore.getInstance();
+        mAuthProvider = new AuthProvider();
+        mUsersProvider = new UserProvider();
+        mDialog = new SpotsDialog.Builder().setContext(this).setMessage(R.string.wait).build();
+
     }
 
     private void register(){
@@ -77,20 +85,26 @@ public class RegisterActivity extends AppCompatActivity {
 
     // Método para crear el usuario
     private void createUser(final String userName, final String mail, String password){
-        auth.createUserWithEmailAndPassword(mail, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+        mDialog.show();
+        mAuthProvider.register(mail, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if(task.isSuccessful()){
+                    mDialog.dismiss();
+                    String userId = mAuthProvider.getUid();
 
-                    Map<String, Object> map = new HashMap<>();
-                    map.put("mail", mail);
-                    map.put("name", userName);
-                    String userId = auth.getCurrentUser().getUid();
-                    fireStore.collection("Users").document(userId).set(map).addOnCompleteListener(new OnCompleteListener<Void>() {
+                    User user = new User();
+                    user.setId(userId);
+                    user.setEmail(mail);
+
+                    mUsersProvider.create(user).addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
+                            mDialog.dismiss();
                             if(task.isSuccessful()){
-                                Toast.makeText(RegisterActivity.this, "User saved in database", Toast.LENGTH_LONG).show();
+                                Intent intent = new Intent(RegisterActivity.this, HomeActivity.class);
+                                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                                startActivity(intent);
                             }
                         }
                     });
