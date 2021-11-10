@@ -46,8 +46,12 @@ dependencies {
     /* Dependencia para los dialog cuando algo esta cargando */
     implementation 'com.github.d-max:spots-dialog:1.1@aar'
 
+    /* Dependencias para almacenar imágenes en firebase, comprimirlas y mostrarlas */
+    implementation 'com.google.firebase:firebase-storage:19.1.1'
+    implementation 'id.zelory:compressor:2.1.1'
+    implementation 'com.squareup.picasso:picasso:2.5.2'
 
-    // Dependencia para anuncios, lo pedíadependencies
+    // Dependencia para anuncios, lo pedía dependencies
     implementation 'com.google.android.gms:play-services-ads:20.2.0'
 
 

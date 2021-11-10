@@ -6,6 +6,7 @@
         <entry key="../../../../layout/custom_preview.xml" value="0.27291666666666664" />
         <entry key="app/src/main/res/drawable/ic_add_white_50.xml" value="0.2111111111111111" />
         <entry key="app/src/main/res/drawable/ic_baseline_https_24.xml" value="0.21666666666666667" />
+        <entry key="app/src/main/res/drawable/ic_chat_white_40.xml" value="0.20833333333333334" />
         <entry key="app/src/main/res/drawable/ic_launcher_background.xml" value="0.27395833333333336" />
         <entry key="app/src/main/res/drawable/ic_mail.xml" value="0.24444444444444444" />
         <entry key="app/src/main/res/drawable/ic_password_grey.xml" value="0.21666666666666667" />
@@ -15,12 +16,14 @@
         <entry key="app/src/main/res/layout/activity_complete_profile.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_home.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.27105666156202146" />
+        <entry key="app/src/main/res/layout/activity_post.xml" value="0.22" />
         <entry key="app/src/main/res/layout/activity_register.xml" value="0.25" />
         <entry key="app/src/main/res/layout/fragment_chat.xml" value="0.15760869565217392" />
         <entry key="app/src/main/res/layout/fragment_filter.xml" value="0.15760869565217392" />
         <entry key="app/src/main/res/layout/fragment_home.xml" value="0.25" />
         <entry key="app/src/main/res/layout/fragment_profile.xml" value="0.15760869565217392" />
         <entry key="app/src/main/res/menu/bottom_navigation_menu.xml" value="0.2578125" />
+        <entry key="app/src/main/res/xml/file_paths.xml" value="0.15534420289855072" />
       </map>
     </option>
   </component>

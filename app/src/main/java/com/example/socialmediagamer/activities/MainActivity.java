@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.AlertDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -36,6 +37,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import dmax.dialog.SpotsDialog;
+
+
 
 public class MainActivity extends AppCompatActivity {
 
@@ -71,6 +74,7 @@ public class MainActivity extends AppCompatActivity {
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
         mUsersProvider = new UserProvider();
         mDialog = new SpotsDialog.Builder().setContext(this).setMessage(R.string.wait).build();
+
 
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -180,19 +184,24 @@ public class MainActivity extends AppCompatActivity {
     private void login(){
         String mail = mTextinputEmail.getText().toString();
         String pass = mTextinputPassword.getText().toString();
-        mDialog.show();
-        mAuthProvider.login(mail, pass).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-            @Override
-            public void onComplete(@NonNull Task<AuthResult> task) {
-                mDialog.dismiss();
-                if(task.isSuccessful()){
-                    Intent intent = new Intent(MainActivity.this, HomeActivity.class);
-                    startActivity(intent);
-                }else{
-                    Toast.makeText(MainActivity.this, "X Wrong X", Toast.LENGTH_LONG).show();
+
+        if(mail.isEmpty() && pass.isEmpty()){
+            Toast.makeText(MainActivity.this, "Fill fields", Toast.LENGTH_LONG).show();
+        }else{
+            mDialog.show();
+            mAuthProvider.login(mail, pass).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                @Override
+                public void onComplete(@NonNull Task<AuthResult> task) {
+                    mDialog.dismiss();
+                    if(task.isSuccessful()){
+                        Intent intent = new Intent(MainActivity.this, HomeActivity.class);
+                        startActivity(intent);
+                    }else{
+                        Toast.makeText(MainActivity.this, "X Wrong X", Toast.LENGTH_LONG).show();
+                    }
                 }
-            }
-        });
+            });
+        }
     }
 
 }
