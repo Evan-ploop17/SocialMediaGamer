@@ -13,6 +13,7 @@
         <entry key="app/src/main/res/drawable/ic_person_gray_24.xml" value="0.21388888888888888" />
         <entry key="app/src/main/res/drawable/ic_person_grey_24.xml" value="0.21388888888888888" />
         <entry key="app/src/main/res/drawable/rounded_button.xml" value="0.20462962962962963" />
+        <entry key="app/src/main/res/layout/action_bar_toolbar.xml" value="0.151268115942029" />
         <entry key="app/src/main/res/layout/activity_complete_profile.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_home.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.27105666156202146" />
@@ -23,6 +24,7 @@
         <entry key="app/src/main/res/layout/fragment_home.xml" value="0.25" />
         <entry key="app/src/main/res/layout/fragment_profile.xml" value="0.15760869565217392" />
         <entry key="app/src/main/res/menu/bottom_navigation_menu.xml" value="0.2578125" />
+        <entry key="app/src/main/res/menu/main_menu.xml" value="0.2578125" />
         <entry key="app/src/main/res/xml/file_paths.xml" value="0.15534420289855072" />
       </map>
     </option>

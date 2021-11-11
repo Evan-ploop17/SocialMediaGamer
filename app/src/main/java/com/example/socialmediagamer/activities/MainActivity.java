@@ -99,6 +99,17 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    // Esto es para que si el usuario cierrar la app pero no cierra sesion al brirla no deba usar iniciar sesion nuevamente
+    @Override
+    protected void onStart() {
+        super.onStart();
+        if( mAuthProvider.getUserSession() != null){
+            Intent intent = new Intent(MainActivity.this, HomeActivity.class);
+            intent.setFlags( intent.FLAG_ACTIVITY_CLEAR_TASK | intent.FLAG_ACTIVITY_NEW_TASK );
+            startActivity(intent);
+        }
+    }
+
     // Con este método estará esperando que el usuario selecciona la cuenta de google con l que se registrará
     private void signInGoogle() {
         Intent signInIntent = mGoogleSignInClient.getSignInIntent();

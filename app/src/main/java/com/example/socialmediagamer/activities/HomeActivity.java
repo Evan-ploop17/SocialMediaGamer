@@ -17,6 +17,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class HomeActivity extends AppCompatActivity {
 
+    public static Object java;
     BottomNavigationView bottomNavigation;
 
     @Override
